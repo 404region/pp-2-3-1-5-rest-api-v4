@@ -12,7 +12,6 @@ import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
-@RequestMapping("user")
 public class UserController {
     private final UserService userService;
     @Autowired
@@ -20,9 +19,20 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
-    public String showUserPage(Principal principal, Model model) {
-        model.addAttribute("user", userService.findByUsername(principal.getName()));
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login";
+    }
+
+    @GetMapping("/")
+    public String redirect() {
+        return "redirect:/login";
+    }
+
+    @GetMapping("/user")
+    public String userPage(Principal principal, Model model) {
+        model.addAttribute("currUser", userService.findByUsername(principal.getName()));
+        model.addAttribute("currUserRoles", userService.findByUsername(principal.getName()).getRoles());
         return "user";
     }
 
