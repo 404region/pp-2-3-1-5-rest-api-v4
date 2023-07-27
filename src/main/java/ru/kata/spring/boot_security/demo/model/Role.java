@@ -4,13 +4,14 @@ import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @Column(name = "type")
@@ -20,6 +21,10 @@ public class Role implements GrantedAuthority {
     private Set<User> users;
 
     public Role() {
+    }
+
+    public Role(String roleType) {
+        this.roleType = roleType;
     }
 
     public Integer getId() {
@@ -54,5 +59,18 @@ public class Role implements GrantedAuthority {
     @Override
     public String toString() {
         return roleType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Role role = (Role) o;
+        return id == role.id && Objects.equals(roleType, role.roleType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, roleType);
     }
 }

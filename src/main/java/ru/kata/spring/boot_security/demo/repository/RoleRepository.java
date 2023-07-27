@@ -7,5 +7,5 @@ import ru.kata.spring.boot_security.demo.model.Role;
 import javax.persistence.criteria.CriteriaBuilder;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Integer> {
-    Role findByRoleType(String roleType);
+    //Role findByRoleType(String roleType);
 }

@@ -22,9 +22,14 @@ public class RoleServiceImp implements RoleService{
         return roleRepository.findAll();
     }
 
-    @Transactional
     @Override
-    public Role findByRoleType(String roleType) {
-        return roleRepository.findByRoleType(roleType);
+    public void save(Role role) {
+        roleRepository.save(role);
     }
+
+//    @Transactional
+//    @Override
+//    public Role findByRoleType(String roleType) {
+//        return roleRepository.findByRoleType(roleType);
+//    }
 }

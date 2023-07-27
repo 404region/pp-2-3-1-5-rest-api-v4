@@ -27,7 +27,7 @@ public class UserServiceImp implements UserService{
 
     @Override
     public User findByUsername(String username) {
-        return userRepository.findByUsername(username).get();
+        return userRepository.findByUsername(username);
     }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -45,7 +45,7 @@ public class UserServiceImp implements UserService{
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public User getById(Integer id) {
         User user = null;
         Optional<User> exUser = userRepository.findById(id);

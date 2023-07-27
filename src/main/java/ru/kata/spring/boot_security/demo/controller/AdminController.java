@@ -14,7 +14,6 @@ import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
-@RequestMapping("/admin")
 public class AdminController {
 
     private final UserService userService;
@@ -26,7 +25,7 @@ public class AdminController {
         this.roleService = roleService;
     }
 
-    @GetMapping()
+    @GetMapping("/admin")
     public String adminPage(Model model, Principal principal, @ModelAttribute("newUser") User newUser) {
         User currUser = userService.findByUsername(principal.getName());
         // текущий пользователь
@@ -38,13 +37,13 @@ public class AdminController {
         return "admin";
     }
 
-    @PostMapping()
+    @PostMapping("/admin")
     public String addUser(@ModelAttribute("user") User user) {
         userService.addUser(user);
         return "redirect:/admin";
     }
 
-    @PatchMapping("/{id}/edit")
+    @PatchMapping("admin/{id}/edit")
     public String editUser(@ModelAttribute("user") User user) {
 //        User exUser = userService.getById(id);
 //        exUser.setName(editedUser.getName());
@@ -56,7 +55,7 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("admin/{id}")
     public String deleteUser(@PathVariable("id") Integer id) {
         userService.deleteUser(id);
         return "redirect:/admin";
