@@ -25,6 +25,7 @@ public class Util {
     public void initialization() {
         Role adminRole = new Role("ROLE_ADMIN");
         Role userRole = new Role("ROLE_USER");
+
         roleService.save(adminRole);
         roleService.save(userRole);
         User admin = new User("Admin", "Admin", (byte)10, "admin", "admin", Set.of(adminRole, userRole));

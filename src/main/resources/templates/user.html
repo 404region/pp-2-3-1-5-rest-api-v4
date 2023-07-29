@@ -78,8 +78,8 @@
                             <thead>
                             <tr>
                                 <th> ID</th>
-                                <th> First Name</th>
-                                <th> Last Name</th>
+                                <th> Name</th>
+                                <th> Surname</th>
                                 <th> Age</th>
                                 <th> Username</th>
                                 <th> Role</th>
@@ -88,10 +88,10 @@
                             <tbody>
                             <tr>
                                 <td><span th:text=" ${currUser.id}"> ID </span></td>
-                                <td><span th:text=" ${currUser.name}"> First Name </span></td>
-                                <td><span th:text=" ${currUser.surname}"> Last Name </span></td>
+                                <td><span th:text=" ${currUser.name}"> Name </span></td>
+                                <td><span th:text=" ${currUser.surname}"> Surname </span></td>
                                 <td><span th:text=" ${currUser.age}"> Age </span></td>
-                                <td><span th:text=" ${currUser.username}"> Email </span></td>
+                                <td><span th:text=" ${currUser.username}"> Username </span></td>
                                 <td><span th:each="role : ${currUser.getRoles()}">
                                             <span th:text="${role.getAuthority().replace('ROLE_', '')}"> Role</span> </span>
                                 </td>
