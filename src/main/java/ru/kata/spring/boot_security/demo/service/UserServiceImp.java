@@ -69,7 +69,7 @@ public class UserServiceImp implements UserService{
     @Override
     @Transactional
     public void editUser(User user) {
-        //user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 }
