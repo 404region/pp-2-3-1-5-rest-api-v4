@@ -20,22 +20,20 @@ public class UserServiceImp implements UserService{
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public UserServiceImp(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UserServiceImp(UserRepository userRepository, @Lazy BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
+    @Transactional
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException(String.format("User with Email %s not found", username));
-        }
-        return user;
+        return userRepository.findByUsername(username);
     }
 
     @Override
@@ -47,12 +45,12 @@ public class UserServiceImp implements UserService{
     @Override
     @Transactional
     public User getById(Integer id) {
-        User user = null;
-        Optional<User> exUser = userRepository.findById(id);
-        if (exUser.isPresent()) {
-            user = exUser.get();
-        }
-        return user;
+//        User user = null;
+//        Optional<User> exUser = userRepository.findById(id);
+//        if (exUser.isPresent()) {
+//            user = exUser.get();
+//        }
+        return userRepository.findById(id).get();
     }
 
     @Override
@@ -71,7 +69,7 @@ public class UserServiceImp implements UserService{
     @Override
     @Transactional
     public void editUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        //user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 }

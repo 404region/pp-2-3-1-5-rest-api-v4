@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final SuccessUserHandler successUserHandler;
     private final UserService userService;
 
-    public WebSecurityConfig(SuccessUserHandler successUserHandler,@Lazy UserService userService) {
+    public WebSecurityConfig(SuccessUserHandler successUserHandler, UserService userService) {
         this.successUserHandler = successUserHandler;
         this.userService = userService;
     }
@@ -34,8 +34,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/login").not().fullyAuthenticated()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/admin/**", "/api/admin").hasRole("ADMIN")
+                .antMatchers("/user/**", "/api/user").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
                 .anyRequest().authenticated()

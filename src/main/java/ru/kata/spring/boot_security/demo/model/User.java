@@ -12,11 +12,11 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "users")
 public class User implements UserDetails, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,13 +48,12 @@ public class User implements UserDetails, Serializable {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER) // с LAZY дальше страницы login не идет
-    @JoinTable(name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-    private Set<Role> roles;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinTable(joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private Set<Role> roles = new HashSet<>();
 
+    // construstors
     public User() {
     }
 
@@ -67,6 +66,17 @@ public class User implements UserDetails, Serializable {
         this.roles = roles;
     }
 
+    public User(Integer id, String name, String surname, Byte age, String username, String password, Set<Role> roles) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.age = age;
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+    }
+
+    // getters and setters
     public Integer getId() {
         return id;
     }
@@ -115,6 +125,7 @@ public class User implements UserDetails, Serializable {
         this.roles = roles;
     }
 
+    // override methods
     @Override
     public String toString() {
         return "User{" +
@@ -124,8 +135,22 @@ public class User implements UserDetails, Serializable {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && Objects.equals(username, user.username) && Objects.equals(password, user.password)
+                && Objects.equals(name, user.name) && Objects.equals(surname, user.surname)
+                && Objects.equals(age, user.age);
+    }
 
-// overriding UserDetails methods
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, password, id, name, surname, age);
+    }
+
+    // overriding UserDetails methods
     // получаем роли для юзера
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -164,20 +189,5 @@ public class User implements UserDetails, Serializable {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id == user.id && Objects.equals(username, user.username) && Objects.equals(password, user.password)
-                && Objects.equals(name, user.name) && Objects.equals(surname, user.surname)
-                && Objects.equals(age, user.age);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(username, password, id, name, surname, age);
     }
 }

@@ -13,12 +13,12 @@ import java.util.Set;
 @Component
 public class Util {
     private final RoleService roleService;
-    private final UserService usersService;
+    private final UserService userService;
 
     @Autowired
-    public Util(RoleService roleService, UserService usersService) {
+    public Util(RoleService roleService, UserService userService) {
         this.roleService = roleService;
-        this.usersService = usersService;
+        this.userService = userService;
     }
 
     @PostConstruct
@@ -29,10 +29,10 @@ public class Util {
         roleService.save(adminRole);
         roleService.save(userRole);
         User admin = new User("Admin", "Admin", (byte)10, "admin", "admin", Set.of(adminRole, userRole));
-        usersService.addUser(admin);
+        userService.addUser(admin);
 
         roleService.save(userRole);
         User user = new User("User","User", (byte)10, "user", "user", Set.of(userRole));
-        usersService.addUser(user);
+        userService.addUser(user);
     }
 }
