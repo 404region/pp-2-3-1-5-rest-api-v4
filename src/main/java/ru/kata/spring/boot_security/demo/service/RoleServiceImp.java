@@ -28,9 +28,4 @@ public class RoleServiceImp implements RoleService{
         roleRepository.save(role);
     }
 
-//    @Transactional
-//    @Override
-//    public Role findByRoleType(String roleType) {
-//        return roleRepository.findByRoleType(roleType);
-//    }
 }

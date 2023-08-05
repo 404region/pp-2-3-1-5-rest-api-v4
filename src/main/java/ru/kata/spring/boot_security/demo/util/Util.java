@@ -28,11 +28,11 @@ public class Util {
 
         roleService.save(adminRole);
         roleService.save(userRole);
-        User admin = new User("Admin", "Admin", (byte)10, "admin", "admin", Set.of(adminRole, userRole));
+        User admin = new User("Admin", "Admin", (byte)25, "admin", "admin", Set.of(adminRole, userRole));
         userService.addUser(admin);
 
         roleService.save(userRole);
-        User user = new User("User","User", (byte)10, "user", "user", Set.of(userRole));
+        User user = new User("User","User", (byte)23, "user", "user", Set.of(userRole));
         userService.addUser(user);
     }
 }

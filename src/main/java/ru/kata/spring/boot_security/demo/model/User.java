@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo.model;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.WhereJoinTable;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -17,6 +16,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@Table(name = "users")
 public class User implements UserDetails, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,7 +53,7 @@ public class User implements UserDetails, Serializable {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Set<Role> roles = new HashSet<>();
 
-    // construstors
+
     public User() {
     }
 
@@ -125,7 +125,7 @@ public class User implements UserDetails, Serializable {
         this.roles = roles;
     }
 
-    // override methods
+
     @Override
     public String toString() {
         return "User{" +
@@ -150,8 +150,6 @@ public class User implements UserDetails, Serializable {
         return Objects.hash(username, password, id, name, surname, age);
     }
 
-    // overriding UserDetails methods
-    // получаем роли для юзера
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
@@ -167,25 +165,21 @@ public class User implements UserDetails, Serializable {
         return username;
     }
 
-    // проверяем, действительный ли аккаунт
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
-    // проверяем, не заблокирован ли аккаунт
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
-    // проверяем, действительный ли пароль
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
-    // проверяем, работает ли аккаунт
     @Override
     public boolean isEnabled() {
         return true;
