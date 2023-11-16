@@ -40,7 +40,7 @@ public class User implements UserDetails, Serializable {
 
     @Min(value = 1, message = "Age should be greater than 0")
     @Column(name = "age")
-    private Byte age;
+    private int age;
 
     @Column(unique = true, name = "username")
     private String username;
@@ -57,7 +57,7 @@ public class User implements UserDetails, Serializable {
     public User() {
     }
 
-    public User(String name, String surname, Byte age, String username, String password, Set<Role> roles) {
+    public User(String name, String surname, int age, String username, String password, Set<Role> roles) {
         this.name = name;
         this.surname = surname;
         this.age = age;
@@ -66,7 +66,7 @@ public class User implements UserDetails, Serializable {
         this.roles = roles;
     }
 
-    public User(Integer id, String name, String surname, Byte age, String username, String password, Set<Role> roles) {
+    public User(Integer id, String name, String surname, int age, String username, String password, Set<Role> roles) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -101,7 +101,7 @@ public class User implements UserDetails, Serializable {
         this.surname = surname;
     }
 
-    public Byte getAge() {
+    public int getAge() {
         return age;
     }
 
