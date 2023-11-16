@@ -29,7 +29,7 @@ public class User implements UserDetails, Serializable {
     private String surname;
 
     @Column(name = "age")
-    private int age;
+    private Byte age;
 
     @Column(unique = true, name = "username")
     private String username;
@@ -46,7 +46,7 @@ public class User implements UserDetails, Serializable {
     public User() {
     }
 
-    public User(String name, String surname, int age, String username, String password, Set<Role> roles) {
+    public User(String name, String surname, Byte age, String username, String password, Set<Role> roles) {
         this.name = name;
         this.surname = surname;
         this.age = age;
@@ -55,7 +55,7 @@ public class User implements UserDetails, Serializable {
         this.roles = roles;
     }
 
-    public User(Integer id, String name, String surname, int age, String username, String password, Set<Role> roles) {
+    public User(Integer id, String name, String surname, Byte age, String username, String password, Set<Role> roles) {
         this.id = id;
         this.name = name;
         this.surname = surname;
